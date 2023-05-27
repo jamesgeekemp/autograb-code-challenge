@@ -4,7 +4,7 @@ const putTransactionMock = jest.fn();
 const getAccountMock = jest.fn();
 const putAccountMock = jest.fn();
 
-jest.mock("../../store/store", () => ({
+jest.mock("../store/store", () => ({
   __esModule: true,
   default: {
     getUser: getUserMock,
