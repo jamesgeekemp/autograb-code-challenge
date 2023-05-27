@@ -1,5 +1,5 @@
-import { Transaction, parseTransactionInput } from "../../model/transaction.ts";
-import store from "../../store/store.ts";
+import { Transaction, parseTransactionInput } from "../model/transaction.ts";
+import store from "../store/store.ts";
 
 const depositAccount = async (accountId: string, amount: number) => {
   const account = await store.getAccount(accountId);

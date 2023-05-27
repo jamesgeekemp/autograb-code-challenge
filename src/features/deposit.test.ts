@@ -14,9 +14,9 @@ jest.mock("../../store/store", () => ({
     putTransaction: putTransactionMock,
   },
 }));
-import { Account } from "../../model/account.ts";
-import { Transaction, TransactionInput } from "../../model/transaction.ts";
-import { User } from "../../model/user.ts";
+import { Account } from "../model/account.ts";
+import { Transaction, TransactionInput } from "../model/transaction.ts";
+import { User } from "../model/user.ts";
 import { deposit } from "./deposit.ts";
 
 const testUserId = "123456";
