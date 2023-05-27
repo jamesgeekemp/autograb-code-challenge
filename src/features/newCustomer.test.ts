@@ -16,6 +16,9 @@ const testUserName = "testuser";
 const testUserId = "12345";
 const testAccountId = "98765";
 describe("new customer", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
   describe("given customer signs up with balance 100", () => {
     it("creates User and Account", async () => {
       postUserMock.mockImplementation((userInput: UserInput) =>
