@@ -36,3 +36,6 @@ export const deposit = async (
   }
   return transaction;
 };
+
+export const withdrawal = (userId: string, accountId: string, amount: number) =>
+  deposit(userId, accountId, amount * -1);

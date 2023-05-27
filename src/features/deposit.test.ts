@@ -17,7 +17,7 @@ jest.mock("../store/store", () => ({
 import { Account } from "../model/account.ts";
 import { Transaction, TransactionInput } from "../model/transaction.ts";
 import { User } from "../model/user.ts";
-import { deposit } from "./deposit.ts";
+import { deposit, withdrawal } from "./deposit.ts";
 
 const testUserId = "123456";
 const testAccountId = "987654";
@@ -88,7 +88,7 @@ describe("deposit", () => {
           putTransactionMock.mockImplementation((transaction: Transaction) =>
             Promise.resolve(transaction)
           );
-          const result = await deposit(testUserId, testAccountId, -100);
+          const result = await withdrawal(testUserId, testAccountId, 100);
           expect(result).toEqual({
             id: testTransactionId,
             accountId: testAccountId,
