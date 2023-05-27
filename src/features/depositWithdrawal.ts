@@ -6,15 +6,12 @@ const applyTransactionToAccount = async (
   transaction: Transaction
 ) => {
   const account = await store.getAccount(accountId);
-
   if (!account) throw new Error("Invalid account id");
-
   switch (transaction.type) {
     case "deposit":
       account.balance += transaction.amount;
       break;
     case "withdrawal":
-      console.log(transaction);
       if (transaction.amount > account.balance)
         throw new Error("Insufficient funds!");
       account.balance -= transaction.amount;

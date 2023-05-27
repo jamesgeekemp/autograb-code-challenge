@@ -18,4 +18,5 @@ export default {
   putAccount: async (_account: Account): Promise<Account | undefined> =>
     undefined,
   getAccount: async (_id: string): Promise<Account | undefined> => undefined,
+  getAccounts: async (): Promise<Account[] | undefined> => undefined,
 };
