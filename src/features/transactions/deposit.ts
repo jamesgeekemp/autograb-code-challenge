@@ -21,7 +21,7 @@ export const deposit = async (
   const transactionInput = parseTransactionInput({
     accountId,
     amount,
-    type: "deposit",
+    type: amount > 0 ? "deposit" : "withdrawal",
   });
   const transaction = await store.postTransaction(transactionInput);
   if (!transaction) throw new Error("Failed to create transaction");

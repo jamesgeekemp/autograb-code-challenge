@@ -50,7 +50,7 @@ describe("deposit", () => {
                 status: "complete",
               })
           );
-          getAccountMock.mockResolvedValue(testAccount);
+          getAccountMock.mockResolvedValue({ ...testAccount });
           putTransactionMock.mockImplementation((transaction: Transaction) =>
             Promise.resolve(transaction)
           );
@@ -70,6 +70,40 @@ describe("deposit", () => {
             id: testAccountId,
             type: "savings",
             balance: 1100,
+          } as Account);
+        });
+      });
+      describe("given user withdraws 100 from account", () => {
+        it("should return complete transaction and account balance should be 900", async () => {
+          getUserMock.mockResolvedValue(testUser);
+          postTransactionMock.mockImplementation(
+            (transactionInput: TransactionInput) =>
+              Promise.resolve({
+                ...transactionInput,
+                id: testTransactionId,
+                status: "complete",
+              })
+          );
+          getAccountMock.mockResolvedValue({ ...testAccount });
+          putTransactionMock.mockImplementation((transaction: Transaction) =>
+            Promise.resolve(transaction)
+          );
+          const result = await deposit(testUserId, testAccountId, -100);
+          expect(result).toEqual({
+            id: testTransactionId,
+            accountId: testAccountId,
+            status: "complete",
+            type: "withdrawal",
+            amount: -100,
+          } as Transaction);
+          expect(getUserMock).toHaveBeenCalledTimes(1);
+          expect(postTransactionMock).toHaveBeenCalledTimes(1);
+          expect(getAccountMock).toHaveBeenCalledTimes(1);
+          expect(putAccountMock).toHaveBeenCalledTimes(1);
+          expect(putAccountMock).toHaveBeenCalledWith({
+            id: testAccountId,
+            type: "savings",
+            balance: 900,
           } as Account);
         });
       });
