@@ -94,7 +94,7 @@ describe("deposit", () => {
             accountId: testAccountId,
             status: "complete",
             type: "withdrawal",
-            amount: -100,
+            amount: 100,
           } as Transaction);
           expect(getUserMock).toHaveBeenCalledTimes(1);
           expect(postTransactionMock).toHaveBeenCalledTimes(1);

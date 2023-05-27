@@ -18,10 +18,11 @@ export const deposit = async (
 ): Promise<Transaction> => {
   const user = await store.getUser(userId);
   if (!user) throw new Error("Invalid user id");
+  const transactionType = amount > 0 ? "deposit" : "withdrawal";
   const transactionInput = parseTransactionInput({
     accountId,
-    amount,
-    type: amount > 0 ? "deposit" : "withdrawal",
+    amount: transactionType === "withdrawal" ? amount * -1 : amount,
+    type: transactionType,
   });
   const transaction = await store.postTransaction(transactionInput);
   if (!transaction) throw new Error("Failed to create transaction");
