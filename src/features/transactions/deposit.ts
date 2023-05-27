@@ -29,7 +29,6 @@ export const deposit = async (
     try {
       await depositAccount(accountId, amount);
     } catch (err) {
-      console.log(err);
       transaction.status = "failed";
       await store.putTransaction(transaction);
     }
