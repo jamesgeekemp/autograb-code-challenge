@@ -17,7 +17,7 @@ jest.mock("../store/store", () => ({
 import { Account } from "../model/account.ts";
 import { Transaction, TransactionInput } from "../model/transaction.ts";
 import { User } from "../model/user.ts";
-import { deposit, withdrawal } from "./deposit.ts";
+import { deposit, withdrawal } from "./depositWithdrawal.ts";
 
 const testUserId = "123456";
 const testAccountId = "987654";
@@ -33,7 +33,7 @@ const testAccount: Account = {
   balance: 1000,
 };
 
-describe("deposit", () => {
+describe("deposit and withdrawal", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -105,6 +105,35 @@ describe("deposit", () => {
             type: "savings",
             balance: 900,
           } as Account);
+        });
+      });
+      describe("given user withdraws 1001 from account", () => {
+        it("should return failed transaction due to insufficient funds and account balance should be 1000 (unchanged)", async () => {
+          getUserMock.mockResolvedValue(testUser);
+          postTransactionMock.mockImplementation(
+            (transactionInput: TransactionInput) =>
+              Promise.resolve({
+                ...transactionInput,
+                id: testTransactionId,
+                status: "complete",
+              })
+          );
+          getAccountMock.mockResolvedValue({ ...testAccount });
+          putTransactionMock.mockImplementation((transaction: Transaction) =>
+            Promise.resolve(transaction)
+          );
+          const result = await withdrawal(testUserId, testAccountId, 1001);
+          expect(result).toEqual({
+            id: testTransactionId,
+            accountId: testAccountId,
+            status: "failed",
+            type: "withdrawal",
+            amount: 1001,
+          } as Transaction);
+          expect(getUserMock).toHaveBeenCalledTimes(1);
+          expect(postTransactionMock).toHaveBeenCalledTimes(1);
+          expect(getAccountMock).toHaveBeenCalledTimes(1);
+          expect(putAccountMock).toHaveBeenCalledTimes(0);
         });
       });
     });

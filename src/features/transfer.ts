@@ -1,5 +1,5 @@
 import { Transfer } from "../model/transaction.ts";
-import { deposit, withdrawal } from "./deposit.ts";
+import { deposit, withdrawal } from "./depositWithdrawal.ts";
 
 export const transfer = async (
   fromUserId: string,
@@ -13,7 +13,6 @@ export const transfer = async (
     fromAccountId,
     transferAmount
   );
-  console.log(withdrawalResult);
   const depositResult = await deposit(toUserId, toAccountId, transferAmount);
   return {
     withdrawal: withdrawalResult,

@@ -1,13 +1,25 @@
 import { Transaction, parseTransactionInput } from "../model/transaction.ts";
 import store from "../store/store.ts";
 
-const depositAccount = async (accountId: string, amount: number) => {
+const applyTransactionToAccount = async (
+  accountId: string,
+  transaction: Transaction
+) => {
   const account = await store.getAccount(accountId);
 
   if (!account) throw new Error("Invalid account id");
 
-  // TODO: business rules around whether deposit can proceed for this account type
-  account.balance += amount;
+  switch (transaction.type) {
+    case "deposit":
+      account.balance += transaction.amount;
+      break;
+    case "withdrawal":
+      console.log(transaction);
+      if (transaction.amount > account.balance)
+        throw new Error("Insufficient funds!");
+      account.balance -= transaction.amount;
+      break;
+  }
   await store.putAccount(account);
 };
 
@@ -28,7 +40,7 @@ export const deposit = async (
   if (!transaction) throw new Error("Failed to create transaction");
   if (transaction.status === "complete") {
     try {
-      await depositAccount(accountId, amount);
+      await applyTransactionToAccount(accountId, transaction);
     } catch (err) {
       transaction.status = "failed";
       await store.putTransaction(transaction);
