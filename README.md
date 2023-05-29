@@ -11,16 +11,17 @@ A quick code response to [PoC requirements](./PoCRequirements.md) provided by th
 
 ## Design approach
 
-* Strong-typed domain model implemented in Zod for runtime type checking
-* Each use case implemented as a feature and tested at the business unit level
-* For purpose of this PoC, all db interations abstracted in a 'store'
-* As features grow, and with addition of real backend persistence, would expect to follow Clean Architecture approach
+- Strong-typed domain model implemented in Zod for runtime type checking
+- Each use case implemented as a feature and tested at the business unit level
+- For purpose of this PoC, all db interations abstracted in a 'store'
+- As features grow, and with addition of real backend persistence, would expect to follow Clean Architecture approach
 
 ## Omissions / next steps
-* Web server and routing
-* Security layer
-* Data persistence
-* Role-based permissions
-* Error handling needs improving
-* Association between user and account records (not explicitly addressed in this PoC)
-* Web and mobile clients
+
+- Web server and routing
+- Security layer
+- Data persistence
+- Role-based permissions
+- Error handling needs improving
+- Association between user and account records (not explicitly addressed in this PoC)
+- Web and mobile clients
