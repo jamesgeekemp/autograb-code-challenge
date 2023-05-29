@@ -18,22 +18,22 @@ const put = <T extends { id: string }>(item: T, container: T[]) => {
 };
 
 export default {
-  getUser: async (_id: string): Promise<User | undefined> =>
-    users.find((user) => user.id === _id),
-  postUser: async (_userInput: UserInput): Promise<User | undefined> => {
-    const user: User = { ..._userInput, id: uuid() };
+  getUser: async (id: string): Promise<User | undefined> =>
+    users.find((user) => user.id === id),
+  postUser: async (userInput: UserInput): Promise<User | undefined> => {
+    const user: User = { ...userInput, id: uuid() };
     users.push(user);
     return user;
   },
-  putUser: async (_user: User): Promise<User | undefined> => {
-    put(_user, users);
-    return _user;
+  putUser: async (user: User): Promise<User | undefined> => {
+    put(user, users);
+    return user;
   },
   postTransaction: async (
-    _transactionInput: TransactionInput
+    transactionInput: TransactionInput
   ): Promise<Transaction | undefined> => {
     const transaction = {
-      ..._transactionInput,
+      ...transactionInput,
       id: uuid(),
       utcTimestamp: new Date().toUTCString(),
       status: "complete" as "complete" | "failed",
@@ -42,23 +42,23 @@ export default {
     return transaction;
   },
   putTransaction: async (
-    _transaction: Transaction
+    transaction: Transaction
   ): Promise<Transaction | undefined> => {
-    put(_transaction, transactions);
-    return _transaction;
+    put(transaction, transactions);
+    return transaction;
   },
   postAccount: async (
-    _accountInput: AccountInput
+    accountInput: AccountInput
   ): Promise<Account | undefined> => {
-    const account = { ..._accountInput, id: uuid() };
+    const account = { ...accountInput, id: uuid() };
     accounts.push(account);
     return account;
   },
-  putAccount: async (_account: Account): Promise<Account | undefined> => {
-    put(_account, accounts);
-    return _account;
+  putAccount: async (account: Account): Promise<Account | undefined> => {
+    put(account, accounts);
+    return account;
   },
-  getAccount: async (_id: string): Promise<Account | undefined> =>
-    accounts.find((account) => account.id === _id),
+  getAccount: async (id: string): Promise<Account | undefined> =>
+    accounts.find((account) => account.id === id),
   getAccounts: async (): Promise<Account[] | undefined> => accounts,
 };
